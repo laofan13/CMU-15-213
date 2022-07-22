@@ -1,0 +1,44 @@
+# Execution begins at address 0 
+	.pos 0
+	irmovq stack, %rsp  	# Set up stack pointer
+	call main		# Execute main program
+	halt			# Terminate program 
+
+# Sample linked list
+    .align 8
+ele1:
+    .quad 0x00a
+    .quad ele2
+ele2:
+    .quad 0x0b0
+    .quad ele3
+ele3:
+    .quad 0xc00
+    .quad 0
+
+main:	
+    irmovq ele1,%rdi
+	call rum_list		# sum_list(ele1)
+	ret
+
+# long rum_list(list_ptr ls)
+# start in %rdi
+rum_list:
+    xorq %rax,%rax	     # sum = 0	
+	andq %rdi,%rdi	     # Set CC
+	jmp     test         # Goto test
+loop:	
+    mrmovq (%rdi),%rsi  # Get *ls->val
+    mrmovq 0x8(%rdi),%rdi   # ls = ls->next
+    pushq %rsi
+    call rum_list
+    popq %rsi
+    addq %rsi,%rax       # Add to sum
+    ret
+test:	
+    jne    loop          # Stop when 0
+	ret                  # Return
+
+# Stack starts here and grows to lower addresses
+	.pos 0x200
+stack:

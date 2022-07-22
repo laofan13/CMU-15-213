@@ -1,0 +1,10 @@
+
+examples.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <.text>:
+   0:	68 26 8e 04 08       	pushq  $0x8048e26
+   5:	b8 b0 6b 26 4e       	mov    $0x4e266bb0,%eax
+   a:	c3                   	retq   

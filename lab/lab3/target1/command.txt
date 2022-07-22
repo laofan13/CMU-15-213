@@ -1,0 +1,9 @@
+set disassemble-next-line on
+r -q < exploit-raw.txt
+x/12xw $rsp
+
+./hex2raw < exploit.txt > exploit-raw.txt
+./ctarget -i exploit-raw.txt
+
+gcc -c example.s
+objdump -d example.o > example.d
